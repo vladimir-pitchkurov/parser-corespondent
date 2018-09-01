@@ -7,6 +7,8 @@ use App\Helpers\DbHelper;
 use App\models\Course;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
+use Yajra\Datatables\Datatables;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 
 
@@ -43,9 +45,10 @@ class ParserController extends Controller
         $course = new Course();
         //$this->helper->saveCourse($data);
         $courses = $this->helper->getAllCourses();
-        dump($data);
+       // dump($data);
 
-        dd($courses);
+        //dd($courses);
+        return Datatables::of($courses)->make(true);
     }
 
 }
