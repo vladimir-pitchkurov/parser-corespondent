@@ -6,10 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
-
-
-    public function bank()
+    public function getAllCourses()
     {
-        return $this->belongsTo(Bank::class);
+        return $this->leftJoin('banks', 'bank_id', '=', 'banks.id')->get();
     }
 }
