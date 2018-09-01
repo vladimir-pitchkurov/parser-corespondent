@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 
 Route::get('/parser', ['uses' => 'controllers\ParserController@index']);
+Route::get('/1', ['uses' => 'controllers\ParserController@second']);
