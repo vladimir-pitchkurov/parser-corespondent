@@ -36,29 +36,27 @@ class ParserController extends Controller
 
     public function index()
     {
-        //$link = "https://korrespondent.net/business/indexes/course_valjut/bank/";
-        $link = "https://korrespondent.net/ajax/module.aspx?spm_id=553&fid=2&IsAjax=true";
+        $dates = false;
+        $dates = $this->helper->existingDates();
 
-
-        $html = $this->driver->getContent($link);
-
-        $domCrawler = new DomCrawler($html);
-        echo $domCrawler->html();
+        return view('table', ['uri' => '/all', 'dates' => $dates]);
     }
 
-    public function second()
+    public function second(Request $request)
     {
+        $params = null;
+        if($request->input('date-get')){
+            $params = ['date-get' => $request->input('date-get')];
+        }
+
         $link = "https://korrespondent.net/business/indexes/course_valjut/bank/";
-        //$link = "https://korrespondent.net/ajax/module.aspx?spm_id=553&fid=2&IsAjax=true";
         $html = $this->driver->getContent($link);
         $data = $this->helper->prepareData($html);
 
         $course = new Course();
         //$this->helper->saveCourse($data);
-        $courses = $this->helper->getAllCourses();
-       // dump($data);
+        $courses = $this->helper->getAllCourses($params);
 
-        //dd($courses);
         return Datatables::of($courses)->make(true);
     }
 
