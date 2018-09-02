@@ -12,6 +12,7 @@
     <table id="courses" class="table table-hover table-condensed" style="width:100%">
         <thead>
         <tr>
+            <th>Валюта</th>
             <th>Банк</th>
             <th>Покупка</th>
             <th>Продажа</th>
@@ -42,6 +43,9 @@
                 method: 'POST'
             },
             "columns": [
+                {
+                    data: 'currency', name: 'currency'
+                },
                 {
                     data: 'title', name: 'title'
                 },
