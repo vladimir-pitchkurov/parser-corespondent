@@ -3,12 +3,14 @@
 
 
 
-
-
-
-<h1>Some content</h1>
-
 <div class="container">
+  @if(count($dates) > 0)
+    <select name="existing-date" id="existing-date">
+        @foreach($dates as $date)
+          <option value="{{$date->save_at}}" selected >{{$date->ru_date}}</option>
+        @endforeach
+    </select>
+  @endif
     <table id="courses" class="table table-hover table-condensed" style="width:100%">
         <thead>
         <tr>
@@ -26,7 +28,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        var filters = {};
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -40,7 +41,13 @@
 
             "ajax": {
                 url: "{{ $uri }}",
-                method: 'POST'
+                method: 'POST',
+                "data": function ( d ) {
+                    var neededDate = $('#existing-date').find('option:selected').attr('value');
+                    return $.extend( {}, d, {
+                        "date-get": neededDate
+                    } );
+                }
             },
             "columns": [
                 {
@@ -58,14 +65,12 @@
                 {
                     data: 'ru_date', name: 'ru_date'
                 }
-
             ]
-
-
         });
 
-
-
+        $('#date-course').on('change', function () {
+            coursesTable.ajax.reload();
+        });
 
     });
 
