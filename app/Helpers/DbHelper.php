@@ -18,6 +18,23 @@ class DbHelper
         $this->course = $course;
     }
 
+    public function seveFromHrmlArr($htmlArr)
+    {
+        $dataForSave = [];
+        try{
+            foreach ($htmlArr as $page){
+                $dataForSave[] = $this->prepareData($page);
+            }
+            foreach ($dataForSave as $data){
+                $this->saveCourse($data);
+            }
+        }
+        catch (\Exception $e){
+            return dump("Exeption in save from html arr method: , $e");
+        }
+        return true;
+    }
+
     public function getAllCourses()
     {
         return $this->course->getAllCourses();
