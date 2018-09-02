@@ -11,11 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('table')->with('uri', '/all');
-});
+Route::get('/', ['uses' => 'controllers\ParserController@index']);
 
-Route::get('/parser', ['uses' => 'controllers\ParserController@index']);
+//Route::get('/parser', ['uses' => 'controllers\ParserController@index']);
 Route::post('/all', ['uses' => 'controllers\ParserController@second']);
 Route::get('/1', ['uses' => 'controllers\ParserController@test']);
 
