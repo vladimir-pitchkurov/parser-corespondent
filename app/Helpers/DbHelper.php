@@ -10,12 +10,15 @@ use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 
 class DbHelper
 {
-    protected $bank, $course;
-
-    public function __construct(Bank $bank, Course $course)
+    public function __construct()
     {
-        $this->bank = $bank;
-        $this->course = $course;
+        $this->bank = new Bank;
+        $this->course = new Course;
+    }
+
+    public function existingDates()
+    {
+        return $this->course->existingDates();
     }
 
     public function seveFromHrmlArr($htmlArr)
@@ -35,9 +38,12 @@ class DbHelper
         return true;
     }
 
-    public function getAllCourses()
+    public function getAllCourses($params = null)
     {
-        return $this->course->getAllCourses();
+        if($params){
+            $params = ['date-get' => preg_split('[ ]', $params['date-get'])[0]];
+        }
+        return $this->course->getAllCourses($params);
     }
 
     public function saveCourse(Array $data)
