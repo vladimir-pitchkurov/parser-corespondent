@@ -4,6 +4,7 @@ namespace App\Http\Controllers\controllers;
 
 use App\Drivers\KorespondentDriver;
 use App\Helpers\DbHelper;
+use App\models\Bank;
 use App\models\Course;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -21,6 +22,16 @@ class ParserController extends Controller
     {
         $this->driver = new KorespondentDriver();
         $this->helper = $helper;
+    }
+
+    public function test()
+    {
+        $dataForSave = [];
+        $htmlArray = $this->driver->getBanksCoursesHtml();
+        $result = $this->helper->seveFromHrmlArr($htmlArray);
+        dd($result);
+
+
     }
 
     public function index()
