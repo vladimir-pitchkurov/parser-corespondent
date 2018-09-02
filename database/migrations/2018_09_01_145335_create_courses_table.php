@@ -22,8 +22,7 @@ class CreateCoursesTable extends Migration
             $table->decimal('sale_price', 10, 4)->nullable()->default(null);
             $table->decimal('interbank', 10, 4)->nullable()->default(null);
             $table->string('ru_date')->nullable()->default(null);
-
-            $table->timestamps();
+            $table->timestamp('save_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 
