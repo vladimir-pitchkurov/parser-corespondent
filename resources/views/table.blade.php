@@ -7,7 +7,7 @@
   @if(count($dates) > 0)
     <select name="existing-date" id="existing-date">
         @foreach($dates as $date)
-          <option value="{{$date->save_at}}" selected >{{$date->ru_date}}</option>
+          <option value="{{$date->save_at}}" >{{$date->ru_date}}</option>
         @endforeach
     </select>
   @endif
@@ -43,7 +43,7 @@
                 url: "{{ $uri }}",
                 method: 'POST',
                 "data": function ( d ) {
-                    var neededDate = $('#existing-date').find('option:selected').attr('value');
+                    var neededDate = $('#existing-date option:selected').attr('value');
                     return $.extend( {}, d, {
                         "date-get": neededDate
                     } );
@@ -68,7 +68,7 @@
             ]
         });
 
-        $('#date-course').on('change', function () {
+        $('#existing-date').on('change', function () {
             coursesTable.ajax.reload();
         });
 
