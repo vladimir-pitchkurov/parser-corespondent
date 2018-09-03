@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Drivers\KorespondentDriver;
+use App\Helpers\DbHelper;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,8 +26,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->call(function () {
+            $driver = new KorespondentDriver();
+            $helper = new DbHelper();
+            $htmlArray = $driver->getBanksCoursesHtml();
+            $result = $helper->seveFromHrmlArr($htmlArray);
+        })->twiceDaily(8, 16);//dailyAt('12:00');
     }
 
     /**
